@@ -1,0 +1,65 @@
+{
+  "appName": "Rahla",
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "done": "Done",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry"
+  },
+  "auth": {
+    "welcome": "Welcome to Rahla",
+    "welcomeSubtitle": "Your companion through every step of motherhood",
+    "login": "Sign In",
+    "register": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signOut": "Sign Out"
+  },
+  "tabs": {
+    "home": "Home",
+    "track": "Track",
+    "baby": "Baby",
+    "learn": "Learn",
+    "profile": "Profile"
+  },
+  "home": {
+    "greeting": "Hello",
+    "weekLabel": "Week",
+    "daysLeft": "days left",
+    "trimesterFirst": "First Trimester",
+    "trimesterSecond": "Second Trimester",
+    "trimesterThird": "Third Trimester"
+  },
+  "tracker": {
+    "title": "Pregnancy Tracker",
+    "logToday": "Log Today",
+    "mood": "Mood",
+    "weight": "Weight",
+    "symptoms": "Symptoms"
+  },
+  "diary": {
+    "title": "My Diary",
+    "newEntry": "New Entry",
+    "noEntries": "No entries yet"
+  },
+  "assistant": {
+    "title": "AI Assistant",
+    "placeholder": "Ask me anything..."
+  },
+  "profile": {
+    "title": "My Profile",
+    "pregnancyInfo": "Pregnancy Info",
+    "settings": "Settings",
+    "language": "Language",
+    "notifications": "Notifications"
+  }
+}
