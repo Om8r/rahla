@@ -1,57 +1,39 @@
 import {
   ScrollView,
-  View,
   StyleSheet,
   type ViewStyle,
   type ScrollViewProps,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColorScheme } from 'react-native';
+import { Colors } from '@/constants/theme';
 
 interface ScreenWrapperProps extends ScrollViewProps {
   children: React.ReactNode;
-  /** Use a gradient background instead of flat color */
-  gradient?: boolean;
-  /** Extra padding at bottom (accounts for tab bar height ~83pt) */
   bottomPadding?: number;
   style?: ViewStyle;
+  noPadding?: boolean;
 }
 
-const TAB_BAR_HEIGHT = 83;
+const TAB_BAR_HEIGHT = 100;
 
 /**
- * Shared scroll container for all tab screens.
- * Handles safe area, gradient background, and bottom tab bar offset.
+ * Shared scroll container — flat #F0F2F5 neumorphic background.
  */
 export function ScreenWrapper({
   children,
-  gradient = true,
   bottomPadding = TAB_BAR_HEIGHT,
   style,
+  noPadding = false,
   ...scrollProps
 }: ScreenWrapperProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const isDark = colorScheme === 'dark';
-
-  const gradientColors: [string, string, string] = isDark
-    ? ['#1a0a0f', '#0d0d0f', '#0d0d0f']
-    : ['#fff1f2', '#fdf2f8', '#f8f8ff'];
-
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      {gradient && (
-        <LinearGradient
-          colors={gradientColors}
-          locations={[0, 0.4, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-      )}
       <ScrollView
-        style={[styles.scroll, style]}
+        style={styles.scroll}
         contentContainerStyle={[
-          styles.content,
+          noPadding ? styles.contentNoPad : styles.content,
           { paddingBottom: bottomPadding },
+          style,
         ]}
         showsVerticalScrollIndicator={false}
         {...scrollProps}
@@ -65,13 +47,18 @@ export function ScreenWrapper({
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
+    backgroundColor: Colors.bg,
   },
   scroll: {
     flex: 1,
+    backgroundColor: Colors.bg,
   },
   content: {
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    gap: 16,
+    paddingHorizontal: 24,
+    paddingTop: 32,
+    gap: 40,
+  },
+  contentNoPad: {
+    flexGrow: 1,
   },
 });

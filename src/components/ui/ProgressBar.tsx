@@ -1,12 +1,11 @@
 import { View, StyleSheet, type ViewStyle } from 'react-native';
+import { useEffect } from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  useEffect,
 } from 'react-native-reanimated';
-import { useColorScheme } from 'react-native';
-import { Palette, Radius } from '@/constants/theme';
+import { Colors } from '@/constants/theme';
 
 interface ProgressBarProps {
   /** 0–100 */
@@ -15,22 +14,19 @@ interface ProgressBarProps {
   style?: ViewStyle;
   trackColor?: string;
   fillColor?: string;
+  fillColorEnd?: string;
 }
 
 /**
- * Animated linear progress bar.
- * Springs to the target progress value on mount and update.
+ * Neumorphic progress bar — inset track with olive gradient fill.
  */
 export function ProgressBar({
   progress,
-  height = 6,
+  height = 16,
   style,
   trackColor,
-  fillColor,
+  fillColor = Colors.olive,
 }: ProgressBarProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const palette = Palette[colorScheme];
-
   const width = useSharedValue(0);
 
   useEffect(() => {
@@ -51,7 +47,7 @@ export function ProgressBar({
         {
           height,
           borderRadius: height / 2,
-          backgroundColor: trackColor ?? palette.primaryLight,
+          backgroundColor: trackColor ?? Colors.bg,
         },
         style,
       ]}
@@ -60,9 +56,10 @@ export function ProgressBar({
         style={[
           styles.fill,
           {
-            height,
-            borderRadius: height / 2,
-            backgroundColor: fillColor ?? palette.primary,
+            height: height - 8,
+            top: 4,
+            borderRadius: (height - 8) / 2,
+            backgroundColor: fillColor,
           },
           animatedFill,
         ]}
@@ -78,7 +75,6 @@ const styles = StyleSheet.create({
   },
   fill: {
     position: 'absolute',
-    left: 0,
-    top: 0,
+    left: 4,
   },
 });

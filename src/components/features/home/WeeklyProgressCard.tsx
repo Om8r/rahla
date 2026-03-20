@@ -1,127 +1,141 @@
-import { View, Text, StyleSheet, I18nManager } from 'react-native';
-import { useColorScheme } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { GlassCard } from '@/components/ui/GlassCard';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { Badge } from '@/components/ui/Badge';
-import { Palette, Typography, Spacing, Colors } from '@/constants/theme';
-import { PREGNANCY_WEEKS } from '@/constants/pregnancy';
-import type { Trimester } from '@/constants/pregnancy';
 
 interface WeeklyProgressCardProps {
   week: number;
   progressPercent: number;
   daysLeft: number;
-  trimester: Trimester;
+  trimester: string;
   trimesterLabel: string;
 }
 
 /**
- * Hero card showing the current pregnancy week, progress, and trimester.
- * The visual anchor of the Home screen.
+ * Weekly progress card — matches Figma "Weekly Progress Card"
+ * Neumorphic raised card, olive/green progress bar.
  */
 export function WeeklyProgressCard({
   week,
   progressPercent,
   daysLeft,
-  trimester,
   trimesterLabel,
 }: WeeklyProgressCardProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const palette = Palette[colorScheme];
-  const { t } = useTranslation();
-
-  const trimesterVariant =
-    trimester === 'first' ? 'primary' : trimester === 'second' ? 'accent' : 'primary';
-
   return (
-    <GlassCard style={styles.card} rounded="2xl">
-      <View style={styles.inner}>
-        {/* Top row: week label + trimester badge */}
-        <View style={[styles.row, I18nManager.isRTL && styles.rowReverse]}>
-          <Text style={[styles.weekLabel, { color: palette.textSecondary }]}>
-            {t('home.weekLabel')}
-          </Text>
-          <Badge label={trimesterLabel} variant={trimesterVariant} />
+    <View style={styles.card}>
+      {/* Top row: label + icon circle */}
+      <View style={styles.topRow}>
+        <View style={styles.weekInfo}>
+          <Text style={styles.currentLabel}>CURRENT PROGRESS</Text>
+          <Text style={styles.weekNumber}>Week {week}</Text>
+          <Text style={styles.trimester}>{trimesterLabel}</Text>
         </View>
-
-        {/* Week number hero */}
-        <View style={[styles.weekRow, I18nManager.isRTL && styles.rowReverse]}>
-          <Text style={[styles.weekNumber, { color: palette.primary }]}>
-            {week}
-          </Text>
-          <Text style={[styles.weekTotal, { color: palette.textTertiary }]}>
-            {' '}/ {PREGNANCY_WEEKS}
-          </Text>
-        </View>
-
-        {/* Progress bar */}
-        <View style={styles.progressSection}>
-          <ProgressBar progress={progressPercent} height={8} />
-          <View style={[styles.progressLabels, I18nManager.isRTL && styles.rowReverse]}>
-            <Text style={[styles.progressPct, { color: palette.primary }]}>
-              {Math.round(progressPercent)}%
-            </Text>
-            <Text style={[styles.daysLeft, { color: palette.textSecondary }]}>
-              {daysLeft} {t('home.daysLeft')}
-            </Text>
-          </View>
+        {/* Embryo icon placeholder */}
+        <View style={styles.iconCircle}>
+          <Text style={{ fontSize: 20 }}>🤰</Text>
         </View>
       </View>
-    </GlassCard>
+
+      {/* Progress bar section */}
+      <View style={styles.progressSection}>
+        {/* Labels row */}
+        <View style={styles.progressLabels}>
+          <Text style={styles.progressLabel}>CONCEPTION</Text>
+          <Text style={styles.progressLabel}>40 WEEKS</Text>
+        </View>
+
+        {/* Inset track */}
+        <View style={styles.progressTrack}>
+          <ProgressBar
+            progress={progressPercent}
+            height={16}
+            fillColor={Colors.olive}
+          />
+        </View>
+
+        {/* Days left */}
+        <Text style={styles.daysLeft}>{daysLeft} days until due date</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: '100%',
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.card,
+    padding: 32,
+    gap: 48,
+    ...NeuShadow.raised,
   },
-  inner: {
-    padding: Spacing[5],
-    gap: Spacing[3],
-  },
-  row: {
+  topRow: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
-  rowReverse: {
-    flexDirection: 'row-reverse',
+  weekInfo: {
+    gap: 0,
   },
-  weekLabel: {
-    fontSize: Typography.size.sm,
-    fontWeight: Typography.weight.medium,
+  currentLabel: {
+    fontFamily: Font.bold,
+    fontSize: FontSize.caption,
+    color: Colors.olive,
+    letterSpacing: 1.2,
     textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  weekRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
   },
   weekNumber: {
-    fontSize: 72,
-    fontWeight: Typography.weight.heavy,
-    lineHeight: 80,
-    letterSpacing: -3,
+    fontFamily: Font.thin,
+    fontSize: FontSize.h2,
+    lineHeight: 36,
+    color: Colors.textDark,
+    marginTop: 4,
   },
-  weekTotal: {
-    fontSize: Typography.size.xl,
-    fontWeight: Typography.weight.medium,
-    paddingBottom: 12,
+  trimester: {
+    fontFamily: Font.regular,
+    fontSize: FontSize.bodyLg,
+    lineHeight: 24,
+    color: 'rgba(86, 97, 104, 0.7)',
+    marginTop: 0,
+  },
+  iconCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: Colors.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#1E293B',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 2,
   },
   progressSection: {
-    gap: Spacing[2],
+    gap: 16,
   },
   progressLabels: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
-  progressPct: {
-    fontSize: Typography.size.sm,
-    fontWeight: Typography.weight.semibold,
+  progressLabel: {
+    fontFamily: Font.bold,
+    fontSize: FontSize.caption,
+    color: Colors.textFaint,
+    letterSpacing: 1.2,
+  },
+  progressTrack: {
+    backgroundColor: Colors.bg,
+    borderRadius: Radius.pill,
+    padding: 4,
+    shadowColor: '#1E293B',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 1,
   },
   daysLeft: {
-    fontSize: Typography.size.sm,
+    fontFamily: Font.medium,
+    fontSize: FontSize.body,
+    color: Colors.textOlive,
+    textAlign: 'center',
   },
 });

@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, type ViewStyle } from 'react-native';
-import { useColorScheme } from 'react-native';
-import { Palette, Typography, Radius, Spacing } from '@/constants/theme';
+import { Colors, Font, FontSize, Radius } from '@/constants/theme';
 
 type BadgeVariant = 'primary' | 'accent' | 'neutral';
 
@@ -11,17 +10,13 @@ interface BadgeProps {
 }
 
 /**
- * Reusable pill-shaped label badge.
- * Used for trimester labels, status tags, etc.
+ * Reusable pill-shaped label badge — neumorphic style.
  */
 export function Badge({ label, variant = 'primary', style }: BadgeProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const palette = Palette[colorScheme];
-
   const variantStyles: Record<BadgeVariant, { bg: string; text: string }> = {
-    primary: { bg: palette.primaryLight, text: palette.primary },
-    accent:  { bg: palette.accentLight,  text: palette.accent },
-    neutral: { bg: palette.backgroundSecondary, text: palette.textSecondary },
+    primary: { bg: Colors.pinkBg, text: Colors.pink },
+    accent:  { bg: Colors.oliveFaint, text: Colors.olive },
+    neutral: { bg: Colors.bgInput, text: Colors.textMedium },
   };
 
   const { bg, text } = variantStyles[variant];
@@ -36,13 +31,13 @@ export function Badge({ label, variant = 'primary', style }: BadgeProps) {
 const styles = StyleSheet.create({
   badge: {
     alignSelf: 'flex-start',
-    paddingHorizontal: Spacing[3],
+    paddingHorizontal: 12,
     paddingVertical: 4,
-    borderRadius: Radius.full,
+    borderRadius: Radius.pill,
   },
   label: {
-    fontSize: Typography.size.xs,
-    fontWeight: Typography.weight.semibold,
+    fontFamily: Font.semibold,
+    fontSize: FontSize.caption,
     letterSpacing: 0.3,
   },
 });

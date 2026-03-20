@@ -1,77 +1,70 @@
-import { View, Text, StyleSheet, I18nManager } from 'react-native';
-import { useColorScheme } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { Palette, Typography, Spacing, Colors } from '@/constants/theme';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
 
 interface DailyTipCardProps {
   tip: string;
 }
 
 /**
- * Weekly tip card shown at the bottom of the Home screen.
- * Rose left-border accent draws the eye.
+ * Daily tip card — matches Figma "Daily Tip Card"
+ * Row layout: olive icon circle on left + title + tip text on right
  */
 export function DailyTipCard({ tip }: DailyTipCardProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const palette = Palette[colorScheme];
-  const { i18n } = useTranslation();
-
-  const isRTL = I18nManager.isRTL;
-  const sectionTitle = i18n.language === 'ar' ? '✨ نصيحة الأسبوع' : '✨ Tip of the Week';
-
   return (
-    <GlassCard style={styles.card} rounded="2xl">
-      <View style={[styles.inner, isRTL && styles.innerRTL]}>
-        {/* Rose accent bar — left side in LTR, right side in RTL */}
-        <View
-          style={[
-            styles.accentBar,
-            isRTL ? styles.accentBarRight : styles.accentBarLeft,
-            { backgroundColor: palette.primary },
-          ]}
-        />
-
-        <View style={styles.textGroup}>
-          <Text style={[styles.title, { color: palette.primary }]}>
-            {sectionTitle}
-          </Text>
-          <Text style={[styles.tip, { color: palette.text }]}>{tip}</Text>
-        </View>
+    <View style={styles.card}>
+      {/* Icon circle */}
+      <View style={styles.iconCircle}>
+        <Text style={{ fontSize: 22 }}>🌿</Text>
       </View>
-    </GlassCard>
+
+      {/* Text content */}
+      <View style={styles.content}>
+        <Text style={styles.title}>Tip of the Day</Text>
+        <Text style={styles.tipText}>{tip}</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: '100%',
-  },
-  inner: {
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.card,
+    padding: 32,
     flexDirection: 'row',
-    padding: Spacing[5],
-    gap: Spacing[4],
+    alignItems: 'center',
+    gap: 24,
+    ...NeuShadow.raised,
   },
-  innerRTL: {
-    flexDirection: 'row-reverse',
+  iconCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: Colors.oliveBg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    shadowColor: '#1E293B',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 1,
   },
-  accentBar: {
-    width: 4,
-    borderRadius: 2,
-    alignSelf: 'stretch',
-  },
-  accentBarLeft: {},
-  accentBarRight: {},
-  textGroup: {
+  content: {
     flex: 1,
-    gap: Spacing[2],
+    gap: 4,
   },
   title: {
-    fontSize: Typography.size.sm,
-    fontWeight: Typography.weight.semibold,
+    fontFamily: Font.bold,
+    fontSize: FontSize.body,
+    lineHeight: 20,
+    color: Colors.textDark,
+    letterSpacing: 0.35,
   },
-  tip: {
-    fontSize: Typography.size.base,
-    lineHeight: Typography.size.base * Typography.lineHeight.relaxed,
+  tipText: {
+    fontFamily: Font.regular,
+    fontSize: FontSize.bodyLg,
+    lineHeight: 26,
+    color: Colors.textMedium,
   },
 });

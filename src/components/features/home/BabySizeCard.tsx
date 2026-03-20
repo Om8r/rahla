@@ -1,8 +1,5 @@
-import { View, Text, StyleSheet, I18nManager } from 'react-native';
-import { useColorScheme } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { Palette, Typography, Spacing } from '@/constants/theme';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
 import type { BabySizeEntry } from '@/constants/baby-size';
 
 interface BabySizeCardProps {
@@ -12,96 +9,76 @@ interface BabySizeCardProps {
 }
 
 /**
- * Shows week-appropriate baby size comparison (fruit/veggie analogy).
- * Makes the week feel tangible and fun.
+ * Baby size card — matches Figma "Baby Size Card"
+ * Centered layout: label → fruit image circle → name → size description
  */
-export function BabySizeCard({ babySize, babySizeName, week }: BabySizeCardProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-  const palette = Palette[colorScheme];
-  const { t, i18n } = useTranslation();
-
-  const isArabic = i18n.language === 'ar';
-  const sectionTitle = isArabic ? `حجم طفلك — الأسبوع ${week}` : `Baby size — Week ${week}`;
-  const lengthLabel = isArabic ? `الطول: ${babySize.lengthCm} سم` : `Length: ${babySize.lengthCm} cm`;
-  const weightLabel =
-    babySize.weightG >= 1000
-      ? isArabic
-        ? `الوزن: ${(babySize.weightG / 1000).toFixed(1)} كغ`
-        : `Weight: ${(babySize.weightG / 1000).toFixed(1)} kg`
-      : isArabic
-        ? `الوزن: ${babySize.weightG} غ`
-        : `Weight: ${babySize.weightG} g`;
+export function BabySizeCard({ babySize, babySizeName }: BabySizeCardProps) {
+  const sizeDesc = `Approx. ${babySize.lengthCm} inches & ${(babySize.weightG / 454).toFixed(2)} lbs`;
 
   return (
-    <GlassCard style={styles.card} rounded="2xl">
-      <View style={styles.inner}>
-        {/* Title */}
-        <Text style={[styles.title, { color: palette.textSecondary }]}>
-          {sectionTitle}
-        </Text>
+    <View style={styles.card}>
+      {/* Section label */}
+      <Text style={styles.sectionLabel}>YOUR BABY IS THE SIZE OF</Text>
 
-        {/* Emoji + name row */}
-        <View style={[styles.sizeRow, I18nManager.isRTL && styles.rowReverse]}>
-          <Text style={styles.emoji}>{babySize.emoji}</Text>
-          <View style={styles.nameGroup}>
-            <Text style={[styles.sizeName, { color: palette.text }]}>
-              {babySizeName}
-            </Text>
-            <View style={[styles.statsRow, I18nManager.isRTL && styles.rowReverse]}>
-              <Text style={[styles.stat, { color: palette.textSecondary }]}>{lengthLabel}</Text>
-              {babySize.weightG > 0 && (
-                <Text style={[styles.stat, { color: palette.textSecondary }]}>
-                  {' · '}
-                  {weightLabel}
-                </Text>
-              )}
-            </View>
-          </View>
-        </View>
+      {/* Fruit/veggie image circle */}
+      <View style={styles.imageCircle}>
+        <Text style={{ fontSize: 64 }}>{babySize.emoji}</Text>
       </View>
-    </GlassCard>
+
+      {/* Name */}
+      <Text style={styles.sizeName}>{babySizeName}</Text>
+
+      {/* Dimensions */}
+      <Text style={styles.sizeDesc}>{sizeDesc}</Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: '100%',
-  },
-  inner: {
-    padding: Spacing[5],
-    gap: Spacing[3],
-  },
-  title: {
-    fontSize: Typography.size.xs,
-    fontWeight: Typography.weight.semibold,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  sizeRow: {
-    flexDirection: 'row',
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.card,
+    padding: 32,
     alignItems: 'center',
-    gap: Spacing[4],
+    gap: 0,
+    ...NeuShadow.raised,
   },
-  rowReverse: {
-    flexDirection: 'row-reverse',
+  sectionLabel: {
+    fontFamily: Font.bold,
+    fontSize: FontSize.caption,
+    color: Colors.textWarm,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    marginBottom: 24,
   },
-  emoji: {
-    fontSize: 56,
-    lineHeight: 64,
-  },
-  nameGroup: {
-    flex: 1,
-    gap: 4,
+  imageCircle: {
+    width: 128,
+    height: 128,
+    borderRadius: 64,
+    backgroundColor: Colors.bgWhite,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 24,
+    shadowColor: '#1E293B',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 2,
   },
   sizeName: {
-    fontSize: Typography.size.xl,
-    fontWeight: Typography.weight.bold,
+    fontFamily: Font.thin,
+    fontSize: FontSize.h3,
+    lineHeight: 32,
+    color: Colors.textDark,
+    textAlign: 'center',
   },
-  statsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  stat: {
-    fontSize: Typography.size.sm,
+  sizeDesc: {
+    fontFamily: Font.regular,
+    fontSize: FontSize.body,
+    lineHeight: 20,
+    color: 'rgba(86, 97, 104, 0.6)',
+    textAlign: 'center',
+    marginTop: 8,
   },
 });

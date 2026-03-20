@@ -1,65 +1,47 @@
-import { View, Text, StyleSheet, I18nManager } from 'react-native';
-import { useColorScheme } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { Palette, Typography, Spacing } from '@/constants/theme';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors, Font, FontSize } from '@/constants/theme';
 
 interface HomeHeaderProps {
   name: string;
 }
 
 /**
- * Top section of the Home screen.
- * Shows a personalized greeting and today's date.
- * RTL-aware layout.
+ * Home greeting — matches Figma "Section - Home Header Greeting"
+ * "Good morning, Sarah" + trimester subtitle
  */
 export function HomeHeader({ name }: HomeHeaderProps) {
-  const { t, i18n } = useTranslation();
-  const colorScheme = useColorScheme() ?? 'light';
-  const palette = Palette[colorScheme];
-
-  const today = new Date().toLocaleDateString(
-    i18n.language === 'ar' ? 'ar-SA' : 'en-US',
-    { weekday: 'long', month: 'long', day: 'numeric' },
-  );
-
-  const greeting = name
-    ? `${t('home.greeting')}، ${name} 👋`
-    : `${t('appName')} 🌸`;
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
   return (
-    <View style={[styles.container, I18nManager.isRTL && styles.rtl]}>
-      <View style={styles.textGroup}>
-        <Text style={[styles.greeting, { color: palette.text }]} numberOfLines={1}>
-          {greeting}
-        </Text>
-        <Text style={[styles.date, { color: palette.textSecondary }]}>
-          {today}
-        </Text>
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.heading}>
+        {greeting},{'\n'}{name}
+      </Text>
+      <Text style={styles.subtitle}>
+        You are in the heart of your second trimester.
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: Spacing[2],
+    gap: 8,
   },
-  rtl: {
-    flexDirection: 'row-reverse',
+  heading: {
+    fontFamily: Font.thin,
+    fontSize: FontSize.h1,
+    lineHeight: 40,
+    color: Colors.textMedium,
+    letterSpacing: -0.9,
   },
-  textGroup: {
-    flex: 1,
-  },
-  greeting: {
-    fontSize: Typography.size['2xl'],
-    fontWeight: Typography.weight.bold,
-    letterSpacing: -0.5,
-  },
-  date: {
-    fontSize: Typography.size.sm,
-    marginTop: 3,
+  subtitle: {
+    fontFamily: Font.medium,
+    fontSize: FontSize.bodyLg,
+    lineHeight: 24,
+    color: Colors.textMuted,
+    letterSpacing: 0.4,
   },
 });
