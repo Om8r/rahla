@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScreenWrapper } from '@/components/shared/ScreenWrapper';
+import { NeuPressable } from '@/components/shared/NeuPressable';
 import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuthStore } from '@/stores/auth.store';
@@ -84,20 +85,20 @@ export default function ProfileScreen() {
         {/* Menu Items */}
         <View style={styles.menuSection}>
           {MENU_ITEMS.map((item, i) => (
-            <TouchableOpacity key={i} style={styles.menuItem} activeOpacity={0.8}>
+            <NeuPressable key={i} tint="blue" borderRadius={Radius.listItem} style={styles.menuItem}>
               <View style={styles.menuIcon}>
                 <Text style={{ fontSize: 18 }}>{item.icon}</Text>
               </View>
               <Text style={styles.menuLabel}>{item.label}</Text>
               <Text style={styles.menuArrow}>›</Text>
-            </TouchableOpacity>
+            </NeuPressable>
           ))}
         </View>
 
         {/* Sign Out */}
-        <TouchableOpacity style={styles.signOutBtn} onPress={signOut} activeOpacity={0.8}>
+        <NeuPressable tint="pink" borderRadius={Radius.pill} style={styles.signOutBtn} onPress={signOut}>
           <Text style={styles.signOutText}>تسجيل الخروج</Text>
-        </TouchableOpacity>
+        </NeuPressable>
       </ScreenWrapper>
     </View>
   );

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
+import { NeuPressable } from '@/components/shared/NeuPressable';
 
 interface DailyTipCardProps {
   tip: string;
@@ -11,7 +12,7 @@ interface DailyTipCardProps {
  */
 export function DailyTipCard({ tip }: DailyTipCardProps) {
   return (
-    <View style={styles.card}>
+    <NeuPressable tint="olive" borderRadius={Radius.card} style={styles.card}>
       {/* Icon circle */}
       <View style={styles.iconCircle}>
         <Text style={{ fontSize: 22 }}>🌿</Text>
@@ -22,19 +23,16 @@ export function DailyTipCard({ tip }: DailyTipCardProps) {
         <Text style={styles.title}>Tip of the Day</Text>
         <Text style={styles.tipText}>{tip}</Text>
       </View>
-    </View>
+    </NeuPressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.bgCard,
-    borderRadius: Radius.card,
     padding: 32,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 24,
-    ...NeuShadow.raised,
   },
   iconCircle: {
     width: 64,

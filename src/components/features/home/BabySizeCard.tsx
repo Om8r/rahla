@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
+import { NeuPressable } from '@/components/shared/NeuPressable';
 import type { BabySizeEntry } from '@/constants/baby-size';
 
 interface BabySizeCardProps {
@@ -16,7 +17,7 @@ export function BabySizeCard({ babySize, babySizeName }: BabySizeCardProps) {
   const sizeDesc = `Approx. ${babySize.lengthCm} inches & ${(babySize.weightG / 454).toFixed(2)} lbs`;
 
   return (
-    <View style={styles.card}>
+    <NeuPressable tint="pink" borderRadius={Radius.card} style={styles.card}>
       {/* Section label */}
       <Text style={styles.sectionLabel}>YOUR BABY IS THE SIZE OF</Text>
 
@@ -30,18 +31,15 @@ export function BabySizeCard({ babySize, babySizeName }: BabySizeCardProps) {
 
       {/* Dimensions */}
       <Text style={styles.sizeDesc}>{sizeDesc}</Text>
-    </View>
+    </NeuPressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.bgCard,
-    borderRadius: Radius.card,
     padding: 32,
     alignItems: 'center',
     gap: 0,
-    ...NeuShadow.raised,
   },
   sectionLabel: {
     fontFamily: Font.bold,

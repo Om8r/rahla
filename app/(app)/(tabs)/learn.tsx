@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { NeuPressable } from '@/components/shared/NeuPressable';
 import { ScreenWrapper } from '@/components/shared/ScreenWrapper';
 import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -133,10 +134,11 @@ export default function LearnScreen() {
         {/* ── Article List ── */}
         <View style={styles.articleList}>
           {ARTICLES.map((article) => (
-            <TouchableOpacity
+            <NeuPressable
               key={article.id}
+              tint="olive"
+              borderRadius={Radius.card}
               style={styles.articleItem}
-              activeOpacity={0.8}
             >
               {/* Thumbnail */}
               <View style={styles.articleThumb}>
@@ -148,7 +150,7 @@ export default function LearnScreen() {
                 <Text style={styles.articleTitle}>{article.title}</Text>
                 <Text style={styles.articleMeta}>{article.meta}</Text>
               </View>
-            </TouchableOpacity>
+            </NeuPressable>
           ))}
         </View>
       </ScreenWrapper>

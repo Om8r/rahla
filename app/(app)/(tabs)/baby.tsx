@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScreenWrapper } from '@/components/shared/ScreenWrapper';
+import { NeuPressable } from '@/components/shared/NeuPressable';
 import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getBabySizeForWeek } from '@/constants/baby-size';
@@ -89,16 +90,16 @@ export default function BabyScreen() {
           <Text style={styles.sectionTitle}>تطور هذا الأسبوع</Text>
           <View style={styles.milestonesList}>
             {milestones.map((m, i) => (
-              <View key={i} style={styles.milestoneItem}>
+              <NeuPressable key={i} tint="pink" borderRadius={Radius.listItem} style={styles.milestoneItem}>
                 <View style={styles.milestoneDot} />
                 <Text style={styles.milestoneText}>{m}</Text>
-              </View>
+              </NeuPressable>
             ))}
           </View>
         </View>
 
         {/* Mom's body card */}
-        <View style={styles.momCard}>
+        <NeuPressable tint="blue" borderRadius={Radius.card} style={styles.momCard}>
           <View style={styles.momCardHeader}>
             <View style={[styles.cardIcon, { backgroundColor: Colors.pinkBg }]}>
               <Text style={{ fontSize: 18 }}>💝</Text>
@@ -112,7 +113,7 @@ export default function BabyScreen() {
               ? 'بدأت تشعرين بحركة طفلك! بطنك يكبر وقد تحتاجين لملابس أكثر راحة.'
               : 'اقترب موعد اللقاء! قد تشعرين بثقل وصعوبة في النوم. استعدي للولادة.'}
           </Text>
-        </View>
+        </NeuPressable>
       </ScreenWrapper>
     </View>
   );

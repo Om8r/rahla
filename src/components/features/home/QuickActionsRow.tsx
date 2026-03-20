@@ -1,17 +1,21 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors, Font, FontSize, NeuShadow, Radius } from '@/constants/theme';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors, Font, FontSize, Radius } from '@/constants/theme';
+import { NeuPressable } from '@/components/shared/NeuPressable';
+
+import type { TintColor } from '@/components/shared/NeuPressable';
 
 interface QuickAction {
   key: string;
   emoji: string;
   label: string;
   iconBg: string;
+  tint: TintColor;
 }
 
 const QUICK_ACTIONS: QuickAction[] = [
-  { key: 'weight',    emoji: '⚖️', label: 'WEIGHT',    iconBg: Colors.pinkBgFaint },
-  { key: 'hydration', emoji: '💧', label: 'HYDRATION', iconBg: Colors.blueFaint },
-  { key: 'sleep',     emoji: '🌙', label: 'SLEEP',     iconBg: Colors.purpleFaint },
+  { key: 'weight',    emoji: '⚖️', label: 'WEIGHT',    iconBg: Colors.pinkBgFaint,   tint: 'pink' },
+  { key: 'hydration', emoji: '💧', label: 'HYDRATION', iconBg: Colors.blueFaint,     tint: 'blue' },
+  { key: 'sleep',     emoji: '🌙', label: 'SLEEP',     iconBg: Colors.purpleFaint,   tint: 'purple' },
 ];
 
 /**
@@ -24,17 +28,18 @@ export function QuickActionsRow() {
       <Text style={styles.sectionLabel}>DAILY LOGGING</Text>
       <View style={styles.row}>
         {QUICK_ACTIONS.map((action) => (
-          <TouchableOpacity
+          <NeuPressable
             key={action.key}
+            tint={action.tint}
+            borderRadius={Radius.card}
             style={styles.button}
-            activeOpacity={0.75}
           >
             {/* Icon circle */}
             <View style={[styles.iconCircle, { backgroundColor: action.iconBg }]}>
               <Text style={{ fontSize: 20 }}>{action.emoji}</Text>
             </View>
             <Text style={styles.label}>{action.label}</Text>
-          </TouchableOpacity>
+          </NeuPressable>
         ))}
       </View>
     </View>
@@ -58,14 +63,11 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: Colors.bgCard,
-    borderRadius: Radius.card,
     paddingVertical: 24,
     paddingHorizontal: 0,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 12,
-    ...NeuShadow.raised,
   },
   iconCircle: {
     width: 48,
