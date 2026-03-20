@@ -6,7 +6,6 @@ import type { BabySizeEntry } from '@/constants/baby-size';
 interface BabySizeCardProps {
   babySize: BabySizeEntry;
   babySizeName: string;
-  week: number;
 }
 
 /**

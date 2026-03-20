@@ -60,7 +60,6 @@ export default function HomeScreen() {
         <BabySizeCard
           babySize={babySize}
           babySizeName={babySizeName}
-          week={currentWeek}
         />
 
         <QuickActionsRow />

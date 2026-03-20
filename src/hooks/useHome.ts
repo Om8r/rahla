@@ -35,6 +35,7 @@ export function useHome() {
       case 'first':  return t('home.trimesterFirst');
       case 'second': return t('home.trimesterSecond');
       case 'third':  return t('home.trimesterThird');
+      default:       return t('home.trimesterSecond');
     }
   }, [displayTrimester, t]);
 

@@ -41,7 +41,7 @@ export const WEEKLY_TIPS: Record<number, WeeklyTip> = {
   34: { ar: 'ابدئي في تجهيز حقيبة المستشفى مع الأشياء الضرورية.', en: 'Start packing your hospital bag with essentials.' },
   35: { ar: 'طفلك شبه مكتمل النمو! يكتسب وزناً كل أسبوع.', en: 'Your baby is nearly fully developed! They gain weight each week now.' },
   36: { ar: 'احرصي على حضور زيارات ما قبل الولادة أسبوعياً الآن.', en: 'Make sure to attend weekly prenatal checkups from now on.' },
-  37: { week: 37, ar: 'طفلك يعتبر "مكتمل الفترة المبكرة" — الولادة محتملة في أي وقت!', en: 'Your baby is considered "early term" — birth could happen anytime!' } as any,
+  37: { ar: 'طفلك يعتبر "مكتمل الفترة المبكرة" — الولادة محتملة في أي وقت!', en: 'Your baby is considered "early term" — birth could happen anytime!' },
   38: { ar: 'جهزي دعماً عاطفياً من حولك — الشريك أو أحد أفراد الأسرة.', en: 'Arrange emotional support around you — your partner or a family member.' },
   39: { ar: 'طفلك جاهز تقريباً! استريحي واحتفظي بطاقتك للولادة.', en: 'Your baby is almost ready! Rest and conserve your energy for labor.' },
   40: { ar: 'موعد الولادة المتوقع! كل لحظة تقربك من لقاء طفلك الجميل.', en: 'Your estimated due date! Every moment brings you closer to meeting your baby.' },
