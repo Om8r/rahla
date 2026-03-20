@@ -1,6 +1,14 @@
 import { create } from 'zustand';
 import { supabase } from '@/lib/supabase';
+import { DEMO_MODE } from '@/constants/config';
 import type { User } from '@/types/auth.types';
+
+const DEMO_USER: User = {
+  id: 'demo',
+  email: 'demo@rahla.app',
+  displayName: 'سارة',
+  createdAt: new Date().toISOString(),
+};
 
 interface AuthStore {
   user: User | null;
@@ -19,6 +27,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   initialize: async () => {
     set({ isLoading: true });
+
+    if (DEMO_MODE) {
+      set({ user: DEMO_USER, isAuthenticated: true, isLoading: false });
+      return;
+    }
+
     const { data } = await supabase.auth.getSession();
     const session = data.session;
 
