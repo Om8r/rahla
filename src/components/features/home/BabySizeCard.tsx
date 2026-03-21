@@ -13,7 +13,7 @@ interface BabySizeCardProps {
  * Centered layout: label → fruit image circle → name → size description
  */
 export function BabySizeCard({ babySize, babySizeName }: BabySizeCardProps) {
-  const sizeDesc = `Approx. ${babySize.lengthCm} inches & ${(babySize.weightG / 454).toFixed(2)} lbs`;
+  const sizeDesc = `Approx. ${babySize.lengthCm} cm & ${(babySize.weightG / 454).toFixed(2)} lbs`;
 
   return (
     <NeuPressable tint="pink" borderRadius={Radius.card} style={styles.card}>
